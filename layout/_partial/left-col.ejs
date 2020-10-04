@@ -27,10 +27,8 @@
 					<a q-on="click: openSlider(e, '<%-i%>')" href="javascript:void(0)"><%= theme.smart_menu[i] %></a>
 				<% } %>
 			<%}%>
-    </nav>
-    <nav>
-      <%- partial('_partial/post/toc', {item: page}) %>
-    </nav>
+            </nav>
+
 		<nav class="header-nav">
 			<div class="social">
 				<% for (var i in theme.subNav){ %>
@@ -51,5 +49,9 @@
 			<% } %>
 		<% } %>
 		</nav>
+
+		<nav>
+			<%- partial('_partial/post/toc', {item: page}) %>
+		  </nav>
 	</header>
 </div>
