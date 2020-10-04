@@ -61,7 +61,7 @@ open_in_new:
 
 # 打赏
 # 打赏type设定：0-关闭打赏； 1-文章对应的md文件里有reward:true属性，才有打赏； 2-所有文章均有打赏
-reward_type: 2
+reward_type: 0
 # 打赏wording
 reward_wording: '谢谢你请我吃糖果'
 # 支付宝二维码图片地址，跟你设置头像的方式一样。比如：/assets/img/alipay.jpg
@@ -69,9 +69,10 @@ alipay: /img/alipay.jpg
 # 微信二维码图片地址
 weixin: /img/weixin.png
 
+# luckyship: 弃用原有的toc, 自己新写了toc，默认全部启用
 # 目录
 # 目录设定：0-不显示目录； 1-文章对应的md文件里有toc:true属性，才有目录； 2-所有文章均显示目录
-toc: 1
+toc: 0
 # 根据自己的习惯来设置，如果你的目录标题习惯有标号，置为true即可隐藏hexo重复的序号；否则置为false
 toc_hide_index: true
 # 目录为空时的提示
@@ -110,7 +111,7 @@ disqus: false
 gitment_owner: false      #你的 GitHub ID
 # 是否使用官方js(false可以提升访问速度，本地修改过一部分的js，官方js可能会出现服务器不稳定，不太建议使用)
 gitment_remote: false
-gitment_repo: ''          #存储评论的 repo name(需要在Github创建)
+gitment_repo: 'myblog'          #存储评论的 repo name(需要在Github创建)
 gitment_oauth:
   client_id: ''           #client ID
   client_secret: ''       #client secret
@@ -131,6 +132,15 @@ giteement:
   gitment_oauth:
     client_id: ''           #client ID
     client_secret: ''       #client secret
+
+#6、Valine https://valine.js.org
+valine: 
+  appid: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz'  #Leancloud应用的appId
+  appkey: 'fstd3ABXC89jc5VDSe6ANGV6'  #Leancloud应用的appKey
+  verify: false #验证码
+  notify: false #评论回复提醒
+  avatar: mm #评论列表头像样式：''/mm/identicon/monsterid/wavatar/retro/hide
+  placeholder: Just go go #评论框占位符
 
 # 访问量统计功能(不蒜子)
 busuanzi:
@@ -156,12 +166,12 @@ clickLove:
 # GitHub Ribbons(https://github.blog/2008-12-19-github-ribbons/)
 github:
   # (关闭请设置为false)
-  url: https://github.com/JoeyBling/hexo-theme-yilia-plus
+  url: https://github.com/luckyship/myblog
 
 # 页脚 Litten(此配置项已弃用)
 # 帮助我们让更多人可以更方便使用Hexo，请尽量不要修改此主题配置
 pageFooter:
-  litten: GitHub:<a href="https://github.com/JoeyBling/hexo-theme-yilia-plus" target="_blank">hexo-theme-yilia-plus</a>
+  litten: GitHub:<a href="https://github.com/luckyship/myblog" target="_blank">luckyship</a>
 
 # 开启百度站长平台自动推送(https://ziyuan.baidu.com/linksubmit/index)
 baidu_push: false
@@ -173,7 +183,7 @@ copyright_type: 2
 copyright_text:
 
 # 网站成立年份(默认为 2018，若填入年份小于当前年份，则显示为 2018-2019 类似的格式)
-since: 2018
+since: 2020
 
 # Progress Bar | 页面加载进度条
 # Demo: http://github.hubspot.com/pace/docs/welcome/
