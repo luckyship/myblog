@@ -1101,7 +1101,6 @@ pre .css ~ * .id {
 
 #header .header-nav {
   width: 100%;
-  position: absolute;
   transition: transform .3s ease-in;
   padding-bottom: 20px; }
   #header .header-nav .social {
@@ -1264,6 +1263,11 @@ pre .css ~ * .id {
       color: #5e5e5e; }
   #page-nav:hover .extend {
     opacity: 1; }
+
+.article-entry p code, .article-entry li code {
+  background: none !important;
+  color: darkorange;
+  border: none !important; }
 
 .archives-wrap {
   position: relative;
@@ -1728,8 +1732,7 @@ pre .css ~ * .id {
   /* p {
     margin-top: 10px;
   } */ }
-  .article-entry p code,
-  .article-entry li code {
+  .article-entry p code, .article-entry li code {
     padding: 1px 3px;
     margin: 0 3px;
     background: #ddd;
@@ -1884,11 +1887,14 @@ pre .css ~ * .id {
   font-size: .8em;
   text-align: left; }
 
-#toc .toc-level-2 {
-  text-indent: 1; }
+#toc .toc-title {
+  text-align: center; }
 
-#toc .toc-level-3 {
-  text-indent: 2; }
+#toc .toc-child {
+  text-indent: 1em; }
+
+#toc .toc-child .toc-child {
+  text-indent: 2em; }
 
 #disqus_thread,
 .cloud-tie-wrapper,
