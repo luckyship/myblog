@@ -1,6 +1,7 @@
 ﻿# Header-菜单
 menu:
   主页: /
+  归档: /archives
   # 技术笔记: https://zhousiwei.gitee.io/ibooks/
   # 随笔: /tags/随笔/
 
