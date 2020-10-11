@@ -140,7 +140,7 @@ valine:
   appid: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz'  #Leancloud应用的appId
   appkey: 'fstd3ABXC89jc5VDSe6ANGV6'  #Leancloud应用的appKey
   verify: false #验证码
-  notify: false #评论回复提醒
+  notify: true #评论回复提醒
   avatar: mm #评论列表头像样式：''/mm/identicon/monsterid/wavatar/retro/hide
   placeholder: Just go go #评论框占位符
 
