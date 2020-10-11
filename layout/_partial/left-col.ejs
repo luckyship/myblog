@@ -50,8 +50,10 @@
 		<% } %>
 		</nav>
 
-		<nav>
+		<% if (post.layout != 'comment') { %>
+		  <nav>
 			<%- partial('_partial/post/toc', {item: page}) %>
 		  </nav>
+		<% } %>
 	</header>
 </div>
