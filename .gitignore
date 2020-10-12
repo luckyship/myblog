@@ -15,6 +15,7 @@ yarn-error.log*
 *.iws
 *.iml
 *.ipr
+.vscode/
 
 /.settings/
 /target/
