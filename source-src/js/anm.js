@@ -1,5 +1,6 @@
 function init() {
   var width, height, largeHeader, canvas, ctx, circles, target, animateHeader = true;
+  let obj = {};
 
   // Main
   initHeader();
@@ -30,9 +31,56 @@ function init() {
     animate();
   }
 
+  function scrollToc() {
+    if (document.querySelector('#toc')) {
+      let titles = Array.from(document.querySelectorAll('article h1,article h2,article h3,article h4,article h5,article h6'));
+      // 全屏滚动条出自container元素
+      let scrollTop = document.querySelector('#container').scrollTop;
+      let matchTitle = titles.find((title) => scrollTop <= title.offsetTop + 31);
+      matchTitle = matchTitle && matchTitle.innerText;
+
+      // 左侧导航栏
+      let tocs = Array.from(document.querySelectorAll('#toc .toc-text'));
+      let matchToc = tocs.find(toc => toc.innerText === matchTitle);
+
+      if (matchToc) {
+        let parentNode = matchToc.parentNode
+        tocs.forEach(toc => toc.parentNode.classList.remove("toc-link-active"))
+        parentNode.classList.add("toc-link-active");
+
+        let currentTop = document.querySelector('.left-col').scrollTop
+        obj.currentTop = currentTop;
+        obj.activeOffsetTop = parentNode.offsetTop;
+
+        if (!window.req && obj.currentTop !== obj.activeOffsetTop) {
+          requestAnimationFrame(scrollToToc.bind(obj));
+          window.req = true;
+        }
+      }
+    }
+  }
+
+  function scrollToToc() {
+    let currentTop = document.querySelector('.left-col').scrollTop;
+    let diff = this.activeOffsetTop - this.currentTop;
+
+    let targetPosition = diff > 0 ? Math.min(currentTop + diff / 10, this.activeOffsetTop) : Math.max(currentTop + diff / 10, this.activeOffsetTop)
+    document.querySelector('.left-col').scrollTo(0, targetPosition);
+    // 最大滚动的距离
+    let maxHeight = document.querySelector('.left-col').scrollHeight - document.querySelector('.left-col').offsetHeight;
+
+    // targetPosition < maxHeight -> 超过滚动距离停止动画
+    if (targetPosition !== this.activeOffsetTop && targetPosition < maxHeight) {
+      requestAnimationFrame(scrollToToc.bind(this))
+    } else {
+      window.req = false;
+    }
+  }
+
   // Event handling
   function addListeners() {
     window.addEventListener('scroll', scrollCheck);
+    document.querySelector('#container').addEventListener('scroll', scrollToc);
     window.addEventListener('resize', resize);
   }
 

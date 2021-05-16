@@ -38,6 +38,11 @@
     border-bottom: 1px solid color-border;
     overflow: visible;
 
+    
+    .toc-link-active {
+      color: #ffd300;
+    }
+
     a {
       color: #696969;
 
