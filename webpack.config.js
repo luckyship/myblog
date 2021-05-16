@@ -13,6 +13,13 @@ var minifyHTML = {
   minifyJS: true
 }
 
+let packName = '[name].[chunkhash:6]';
+let resourceName = '[name].[hash:6]';
+if (process.env.NODE_ENV !== 'production') {
+  packName = '[name]';
+  resourceName = '[name]';
+}
+
 module.exports = {
   entry: {
     main: "./source-src/js/main.js",
@@ -22,7 +29,7 @@ module.exports = {
   output: {
     path: "./source",
     publicPath: "./",
-    filename: "[name].[chunkhash:6].js"
+    filename: `${packName}.js`
   },
   module: {
     loaders: [{
@@ -40,7 +47,7 @@ module.exports = {
       loader: 'url-loader?limit=500&name=img/[name].[ext]'
     }, {
       test: /\.(woff|svg|eot|ttf)\??.*$/,
-      loader: "file-loader?name=fonts/[name].[hash:6].[ext]"
+      loader: `file-loader?name=fonts/${resourceName}.[ext]`
     }]
   },
   alias: {
@@ -56,7 +63,7 @@ module.exports = {
     return [autoprefixer];
   },
   plugins: [
-    new ExtractTextPlugin('[name].[chunkhash:6].css'),
+    new ExtractTextPlugin(`${packName}.css`),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
     }),
