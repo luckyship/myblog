@@ -111,7 +111,19 @@ function init() {
     items.forEach((item) => {
       let matchTitle = false
       if (item.title.toLowerCase().indexOf(val) > -1) {
-        matchTitle = true
+        matchTitle = item.title
+      }
+
+      let reg = new RegExp(`(.{0,20})(${val})(.{0,20})`, 'i');
+      let regArr = item.text.match(reg);
+      let matchContent = {}
+      if (regArr) {
+        // 搜索对应内容和内容的边界
+        matchContent = {
+          pre: regArr[1],
+          val: regArr[2],
+          next: regArr[3]
+        };
       }
 
       let matchTags = false
@@ -121,7 +133,9 @@ function init() {
         }
       })
 
-      if ((type === 'title' && matchTitle) || (type === 'tag' && matchTags)) {
+      if ((type === 'title' && (matchTitle || matchContent.val)) || (type === 'tag' && matchTags)) {
+        item.matchTitle = matchTitle
+        item.matchContent = matchContent
         item.isShow = true
       } else {
         item.isShow = false
