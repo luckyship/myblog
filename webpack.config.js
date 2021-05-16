@@ -82,7 +82,7 @@ module.exports = {
       filename: '../layout/_partial/css.ejs'
     })
   ],
-  watch: true
+  watch: process.env.NODE_ENV !== 'production' ? false : true
 }
 
 if (process.env.NODE_ENV === 'production') {
