@@ -65,7 +65,9 @@ function init() {
     let diff = this.activeOffsetTop - this.currentTop;
 
     let targetPosition = diff > 0 ? Math.min(currentTop + diff / 10, this.activeOffsetTop) : Math.max(currentTop + diff / 10, this.activeOffsetTop)
-    document.querySelector('.left-col').scrollTo(0, targetPosition);
+    // document.querySelector('.left-col').scrollTo(0, targetPosition);
+    // 兼容edge
+    document.querySelector('.left-col').scrollTop = targetPosition;
     // 最大滚动的距离
     let maxHeight = document.querySelector('.left-col').scrollHeight - document.querySelector('.left-col').offsetHeight;
 
