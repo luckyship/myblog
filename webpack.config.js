@@ -15,10 +15,10 @@ var minifyHTML = {
 
 let packName = '[name].[chunkhash:6]';
 let resourceName = '[name].[hash:6]';
-if (process.env.NODE_ENV !== 'production') {
-  packName = '[name]';
-  resourceName = '[name]';
-}
+// if (process.env.NODE_ENV !== 'production') {
+// packName = '[name]';
+// resourceName = '[name]';
+// }
 
 module.exports = {
   entry: {
@@ -47,7 +47,7 @@ module.exports = {
       loader: 'url-loader?limit=500&name=img/[name].[ext]'
     }, {
       test: /\.(woff|svg|eot|ttf)\??.*$/,
-      loader: `file-loader?name=fonts/${resourceName}.[ext]`
+      loader: "file-loader?name=fonts/[name].[hash:6].[ext]"
     }]
   },
   alias: {
@@ -59,7 +59,7 @@ module.exports = {
     }
   },
   // devtool: '#eval-source-map',
-  postcss: function () {
+  postcss: function() {
     return [autoprefixer];
   },
   plugins: [
@@ -82,12 +82,12 @@ module.exports = {
       filename: '../layout/_partial/css.ejs'
     })
   ],
-  watch: process.env.NODE_ENV !== 'production' ? false : true
+  watch: process.env.NODE_ENV === 'production' ? false : true
 }
 
-if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map'
-  module.exports.plugins = (module.exports.plugins || []).concat([
+// if (process.env.NODE_ENV === 'production') {
+// module.exports.devtool = '#source-map'
+module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"'
@@ -101,4 +101,4 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.optimize.OccurenceOrderPlugin(),
     new CleanPlugin('builds')
   ])
-}
+  // }
