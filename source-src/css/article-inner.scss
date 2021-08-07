@@ -85,10 +85,12 @@
 
   p code,
   li code {
-    padding: 1px 3px;
+    padding: .2rem .3rem;
     margin: 0 3px;
-    background: #ddd;
-    border: 1px solid #ccc;
+    background: none;
+    color: darkorange;
+    border: .0625rem solid rgba(0,0,0,.1);
+    border-radius: .3rem;
     font-family: Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace;
     word-wrap: break-word;
     font-size: 14px;
