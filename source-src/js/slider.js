@@ -107,7 +107,6 @@ function init() {
       type = 'tag'
     }
     let items = app.items
-    //console.log(items);
     items.forEach((item) => {
       let matchTitle = false
       if (item.title.toLowerCase().indexOf(val) > -1) {
@@ -144,9 +143,27 @@ function init() {
     app.$set('items', items)
   }
 
-  app.$watch('search', function (val, oldVal) {
+  // 防抖
+  function debounce(func, wait) {
+    var timer = null;
+    return function() {
+      var self = this,
+        args = arguments;
+      if (timer) {
+        clearTimeout(timer);
+      }
+      timer = setTimeout(function() {
+        timer = null;
+        return typeof func === 'function' && func.apply(self, args);
+      }, wait);
+    }
+  }
+
+  let debounceHandleSearch = debounce(handleSearch, 200);
+
+  app.$watch('search', function(val, oldVal) {
     window.localStorage && window.localStorage.setItem(localSearchKey, val)
-    handleSearch(val)
+    debounceHandleSearch(val);
   })
 
   window.fetch(window.yiliaConfig.root + 'content.json?t=' + (+new Date()), {
@@ -155,11 +172,11 @@ function init() {
     return res.json()
   }).then((data) => {
     data.forEach((em) => {
-      em.isShow = true
-    })
-    //console.log(data);
+        em.isShow = true
+      })
+      //console.log(data);
     app.$set('items', data)
-    // 搜索历史记录
+      // 搜索历史记录
     let searchWording = (window.localStorage && window.localStorage.getItem(localSearchKey)) || ''
     app.$set('search', searchWording)
     searchWording !== '' && handleSearch(searchWording)
