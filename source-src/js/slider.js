@@ -113,7 +113,10 @@ function init() {
       val = val.substr(1, val.length);
       type = 'tag';
     }
-    let items = app.items;
+
+    !app.originItems && app.$set('originItems', app.items);
+    let items = app.originItems;
+
     items.forEach(item => {
       let matchTitle = false;
       if (item.title.toLowerCase().indexOf(val) > -1) {
@@ -154,15 +157,16 @@ function init() {
       }
     });
     items = Array.from(items);
-
-    items &&
-      items.sort((a, b) => {
-        if (a.titleArr && !b.titleArr) {
-          return -1;
-        } else {
-          return 1;
-        }
-      });
+    if (val) {
+      items &&
+        items.sort((a, b) => {
+          if (a.titleArr && !b.titleArr) {
+            return -1;
+          } else {
+            return 1;
+          }
+        });
+    }
     app.$set('items', items);
   }
 
