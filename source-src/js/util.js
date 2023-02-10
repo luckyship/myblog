@@ -86,4 +86,6 @@ var e = function () {
     }
 }();
 
-module.exports = e
+// module.exports = e
+
+export const addLoadEvent = e.addLoadEvent;
