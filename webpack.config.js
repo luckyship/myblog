@@ -99,9 +99,14 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+
+const isDev = process.env.NODE_ENV === "production" ? false : true;
 
 module.exports = {
-  mode: "development",
+  mode: isDev ? "development" : "production",
   // JavaScript 执行入口文件
   entry: {
     main: "./source-src/js/main.js",
@@ -116,6 +121,7 @@ module.exports = {
     // 重定向根路径
     publicPath: "/main/",
   },
+  watch: isDev ? true : false,
   module: {
     rules: [
       {
@@ -215,5 +221,36 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "css/index.[chunkhash:6].css",
     }),
+
+    // 自动删除上次生成的打包文件
+    new CleanWebpackPlugin(),
   ],
+
+  optimization: {
+    minimize: true,
+    minimizer: [
+      // 压缩css
+      new CssMinimizerPlugin({
+        minimizerOptions: {
+          preset: [
+            "default",
+            {
+              discardComments: { removeAll: true },
+            },
+          ],
+        },
+      }),
+
+      // 删除所有js注释，需设置mode: production才行
+      new TerserPlugin({
+        terserOptions: {
+          format: {
+            comments: false,
+          },
+          compress: true,
+        },
+        extractComments: false,
+      }),
+    ],
+  },
 };

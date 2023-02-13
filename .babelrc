@@ -3,7 +3,12 @@
     [
       "@babel/preset-env",
       {
-        "targets": "defaults"
+        "targets": "defaults",
+        "useBuiltIns": "usage",
+        "corejs": {
+          // 指定core-js版本
+          "version": 3,
+        },
       }
     ]
   ],
