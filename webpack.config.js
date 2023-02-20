@@ -101,7 +101,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const isDev = process.env.NODE_ENV === "production" ? false : true;
 
@@ -120,6 +119,8 @@ module.exports = {
     path: path.resolve(__dirname, "./source/main"),
     // 重定向根路径
     publicPath: "/main/",
+    // 自动删除上次生成的打包文件
+    clean: true,
   },
   watch: isDev ? true : false,
   module: {
@@ -221,9 +222,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "css/index.[chunkhash:6].css",
     }),
-
-    // 自动删除上次生成的打包文件
-    new CleanWebpackPlugin(),
   ],
 
   optimization: {
