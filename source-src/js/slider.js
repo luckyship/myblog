@@ -7,6 +7,9 @@ import Q from './Q';
 // 神特么safari不支持fetch
 import * as promise from 'es6-promise';
 import * as fetch from 'fetch-ie8';
+const AV = require("leancloud-storage");
+
+
 
 window.Promise = window.Promise || promise.Promise;
 window.fetch = window.fetch || fetch;
@@ -193,29 +196,31 @@ function init() {
     debounceHandleSearch(val);
   });
 
-  window
-    .fetch(window.yiliaConfig.root + 'content.json?t=' + +new Date(), {
-      method: 'get',
-    })
-    .then(res => {
-      return res.json();
-    })
-    .then(data => {
-      data.forEach(em => {
-        em.isShow = true;
-      });
-      app.$set('items', data);
+  // 隐私账号
+  AV.init({
+    appId: "3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz",
+    appKey: "fstd3ABXC89jc5VDSe6ANGV6",
+    serverURL: "https://leancloud.cn",
+  });
+
+  const query = new AV.Query("TestObject");
+  query.limit(1000);
+  query.find().then((TestObject) => {
+    let data = TestObject.map(item => item.attributes);
+
+    data.forEach(em => {
+      em.isShow = true;
+    });
+
+    app.$set('items', data);
+
       // 搜索历史记录
       let searchWording =
-        (window.localStorage && window.localStorage.getItem(localSearchKey)) ||
-        '';
-      app.$set('search', searchWording);
-      searchWording !== '' && handleSearch(searchWording);
-    })
-    .catch(err => {
-      console.warn(err);
-      app.$set('jsonFail', true);
-    });
+      (window.localStorage && window.localStorage.getItem(localSearchKey)) ||
+      '';
+    app.$set('search', searchWording);
+    searchWording !== '' && handleSearch(searchWording);
+  })
 
   // 隐藏
   document.querySelector('#container').onclick = e => {
