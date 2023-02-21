@@ -195,6 +195,7 @@ module.exports = {
     ],
   },
   // devtool: 'inline-source-map',
+  devtool: 'eval-cheap-module-source-map',
   plugins: [
     new HtmlWebpackPlugin({
       inject: false,
@@ -233,7 +234,7 @@ module.exports = {
           preset: [
             "default",
             {
-              discardComments: { removeAll: true },
+              discardComments: { removeAll: true }, // 删除所有注释
             },
           ],
         },
