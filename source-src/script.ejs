@@ -9,9 +9,12 @@
 <script>
 (function() {
 	var loadScript = function(path) {
-	    var $script = document.createElement('script')
+    // slider.js中使用了leancloud，leanCloud初始化需要一定时间，故延迟slider.js加载
+    setTimeout(() => {
+      var $script = document.createElement('script')
 	    document.getElementsByTagName('body')[0].appendChild($script)
 	    $script.setAttribute('src', path)
+    },200)
 	}
 	<% for (var asset in compilation.assets) { %><% if (asset.indexOf('slider') >= 0) { %><% var slider = asset; %><% } %><% } %>loadScript("<%= left %>config.root<%= right %><%= right2 %>main/<%= slider %>")
 })();

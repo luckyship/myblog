@@ -7,9 +7,6 @@ import Q from './Q';
 // 神特么safari不支持fetch
 import * as promise from 'es6-promise';
 import * as fetch from 'fetch-ie8';
-const AV = require("leancloud-storage");
-
-
 
 window.Promise = window.Promise || promise.Promise;
 window.fetch = window.fetch || fetch;
@@ -194,13 +191,6 @@ function init() {
   app.$watch('search', function (val, oldVal) {
     window.localStorage && window.localStorage.setItem(localSearchKey, val);
     debounceHandleSearch(val);
-  });
-
-  // 隐私账号
-  AV.init({
-    appId: "3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz",
-    appKey: "fstd3ABXC89jc5VDSe6ANGV6",
-    serverURL: "https://leancloud.cn",
   });
 
   const query = new AV.Query("TestObject");
