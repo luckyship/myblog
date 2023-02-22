@@ -21,18 +21,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <script src="https://unpkg.com/leancloud-storage@3.15.0/dist/av-min.js"></script>
   <script>
-    window.onload = function () {
-      AV.init({
-        appId: "<%= theme.valine.appid %>",
-        appKey: "<%= theme.valine.appkey %>",
-        serverURLs: {
-          push: "https://leancloud.cn",
-          stats: "https://leancloud.cn",
-          engine: "https://leancloud.cn",
-          api: "https://leancloud.cn",
-        },
-      });
-    };
+    AV.init({
+      appId: "3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz",
+      appKey: "fstd3ABXC89jc5VDSe6ANGV6",
+      serverURLs: {
+        push: "https://leancloud.cn",
+        stats: "https://leancloud.cn",
+        engine: "https://leancloud.cn",
+        api: "https://leancloud.cn",
+      },
+    });
   </script>
 
   <link rel="dns-prefetch" href="<%= config.url %>">
