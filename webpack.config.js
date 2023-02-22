@@ -104,6 +104,8 @@ const TerserPlugin = require("terser-webpack-plugin");
 
 const isDev = process.env.NODE_ENV === "production" ? false : true;
 
+const devtool = isDev ? { devtool: "eval-cheap-module-source-map" } : {};
+
 module.exports = {
   mode: isDev ? "development" : "production",
   // JavaScript 执行入口文件
@@ -195,7 +197,6 @@ module.exports = {
     ],
   },
   // devtool: 'inline-source-map',
-  devtool: 'eval-cheap-module-source-map',
   plugins: [
     new HtmlWebpackPlugin({
       inject: false,
@@ -252,4 +253,5 @@ module.exports = {
       }),
     ],
   },
+  ...devtool
 };
