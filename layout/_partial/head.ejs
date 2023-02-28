@@ -22,8 +22,8 @@
   <script src="https://unpkg.com/leancloud-storage@3.15.0/dist/av-min.js"></script>
   <script>
     AV.init({
-      appId: "3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz",
-      appKey: "fstd3ABXC89jc5VDSe6ANGV6",
+      appId: '<%= theme.valine.appid %>',
+      appKey: '<%= theme.valine.appkey %>',
       serverURLs: {
         push: "https://leancloud.cn",
         stats: "https://leancloud.cn",
@@ -32,6 +32,7 @@
       },
     });
   </script>
+  <%- partial('script') %>
 
   <link rel="dns-prefetch" href="<%= config.url %>">
   <title><% if (title){ %><%= title %> | <% } %><%= config.title %></title>
@@ -62,7 +63,7 @@
   <%- partial('baidu-analytics') %>
   <% if (theme.clickLove && theme.clickLove.enable){ %>
     <%# "页面点击小红心" %>
- 	  <script src="<%- url_for('lib/clickLove.js') %>"></script>
+ 	  <script async src="<%- url_for('lib/clickLove.js') %>"></script>
   <% } %>
   <%- partial('baidu-push') %>
 

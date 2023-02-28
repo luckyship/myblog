@@ -258,9 +258,12 @@ function init() {
   }
 }
 
-init();
-if (!isMobile) {
-  Anm.init();
-}
+document.addEventListener('DOMContentLoaded',function(){
+  init();
+  if (!isMobile) {
+    Anm.init();
+  }
+});
+
 
 module.exports = {};
