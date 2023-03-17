@@ -258,6 +258,15 @@ function init() {
   }
 }
 
+// 防止DOMContentLoaded时间加载完成，还未执行init
+if (document.querySelector('#container')) {
+  init();
+  if (!isMobile) {
+    Anm.init();
+  }
+}
+
+// 等待dom生成
 document.addEventListener('DOMContentLoaded',function(){
   init();
   if (!isMobile) {
