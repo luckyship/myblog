@@ -1,35 +1,37 @@
 // 动画
-import Anm from './anm';
+import Anm from "./anm";
 // 浏览器判断
-import Browser from './browser';
+import Browser from "./browser";
 // Q 基础库
-import Q from './Q';
+import Q from "./Q";
 // 神特么safari不支持fetch
-import * as promise from 'es6-promise';
-import * as fetch from 'fetch-ie8';
+import * as promise from "es6-promise";
+import * as fetch from "fetch-ie8";
+const AV = require("leancloud-storage");
+console.log(AV)
 
 window.Promise = window.Promise || promise.Promise;
 window.fetch = window.fetch || fetch;
 
-let localTagKey = 'yilia-tag';
-let localSearchKey = 'yilia-search';
+let localTagKey = "yilia-tag";
+let localSearchKey = "yilia-search";
 const isMobile = Browser.versions.mobile && window.screen.width < 800;
 
 function fixzero(str) {
-  str = str + '';
-  return str.length === 1 ? '0' + str : str;
+  str = str + "";
+  return str.length === 1 ? "0" + str : str;
 }
 
 function setScrollZero() {
-  let $sct = document.querySelectorAll('.tools-section');
-  $sct.forEach(em => {
+  let $sct = document.querySelectorAll(".tools-section");
+  $sct.forEach((em) => {
     em.scrollTop = 0;
   });
 }
 
 function init() {
   let app = new Q({
-    el: '#container',
+    el: "#container",
     data: {
       isCtnShow: false,
       isShow: 0,
@@ -39,66 +41,66 @@ function init() {
       items: [],
       jsonFail: false,
       showTags: false,
-      search: '',
+      search: "",
     },
     methods: {
-      stop: e => {
+      stop: (e) => {
         e.stopPropagation();
       },
       choseTag: (e, name) => {
-        app.$set('search', '#' + (name ? name : e.target.innerHTML));
+        app.$set("search", "#" + (name ? name : e.target.innerHTML));
       },
-      clearChose: e => {
-        app.$set('search', '');
+      clearChose: (e) => {
+        app.$set("search", "");
       },
-      toggleTag: e => {
-        app.$set('showTags', !app.showTags);
+      toggleTag: (e) => {
+        app.$set("showTags", !app.showTags);
         window.localStorage &&
           window.localStorage.setItem(localTagKey, app.showTags);
       },
       openSlider: (e, type) => {
         e.stopPropagation();
         if (!type) {
-          type = 'innerArchive';
+          type = "innerArchive";
         }
         // innerArchive: '所有文章'
         // friends: '友情链接'
         // aboutme: '关于我'
-        app.$set('innerArchive', false);
-        app.$set('friends', false);
-        app.$set('aboutme', false);
+        app.$set("innerArchive", false);
+        app.$set("friends", false);
+        app.$set("aboutme", false);
         app.$set(type, true);
-        app.$set('isShow', true);
-        app.$set('isCtnShow', true);
+        app.$set("isShow", true);
+        app.$set("isCtnShow", true);
         setScrollZero();
       },
     },
     filters: {
-      isFalse: val => {
+      isFalse: (val) => {
         return val === false;
       },
-      isEmptyStr: str => {
-        return str === '';
+      isEmptyStr: (str) => {
+        return str === "";
       },
-      isNotEmptyStr: str => {
-        return str !== '';
+      isNotEmptyStr: (str) => {
+        return str !== "";
       },
-      urlformat: str => {
+      urlformat: (str) => {
         if (window.yiliaConfig && window.yiliaConfig.root) {
           return window.yiliaConfig.root + str;
         }
-        return '/' + str;
+        return "/" + str;
       },
-      tagformat: str => {
-        return '#' + str;
+      tagformat: (str) => {
+        return "#" + str;
       },
-      dateformat: str => {
+      dateformat: (str) => {
         let d = new Date(str);
         return (
           d.getFullYear() +
-          '-' +
+          "-" +
           fixzero(d.getMonth() + 1) +
-          '-' +
+          "-" +
           fixzero(d.getDate())
         );
       },
@@ -107,23 +109,23 @@ function init() {
   });
 
   function handleSearch(val) {
-    val = (val || '').toLowerCase();
-    let type = 'title';
-    if (val.indexOf('#') === 0) {
+    val = (val || "").toLowerCase();
+    let type = "title";
+    if (val.indexOf("#") === 0) {
       val = val.substr(1, val.length);
-      type = 'tag';
+      type = "tag";
     }
 
-    !app.originItems && app.$set('originItems', app.items);
+    !app.originItems && app.$set("originItems", app.items);
     let items = app.originItems;
 
-    items.forEach(item => {
+    items.forEach((item) => {
       let matchTitle = false;
       if (item.title.toLowerCase().indexOf(val) > -1) {
         matchTitle = item.title;
       }
 
-      let reg = new RegExp(`(.{0,20})(${val})(.{0,20})`, 'i');
+      let reg = new RegExp(`(.{0,20})(${val})(.{0,20})`, "i");
       let textArr = item.text.match(reg);
       let titleArr = item.title.match(reg);
       let regArr = titleArr || textArr;
@@ -139,15 +141,15 @@ function init() {
       }
 
       let matchTags = false;
-      item.tags.forEach(tag => {
+      item.tags.forEach((tag) => {
         if (tag.name.toLowerCase().indexOf(val) > -1) {
           matchTags = true;
         }
       });
 
       if (
-        (type === 'title' && (matchTitle || matchContent.val)) ||
-        (type === 'tag' && matchTags)
+        (type === "title" && (matchTitle || matchContent.val)) ||
+        (type === "tag" && matchTags)
       ) {
         item.matchTitle = matchTitle;
         item.matchContent = matchContent;
@@ -167,7 +169,7 @@ function init() {
           }
         });
     }
-    app.$set('items', items);
+    app.$set("items", items);
   }
 
   // 防抖
@@ -181,14 +183,14 @@ function init() {
       }
       timer = setTimeout(function () {
         timer = null;
-        return typeof func === 'function' && func.apply(self, args);
+        return typeof func === "function" && func.apply(self, args);
       }, wait);
     };
   }
 
   let debounceHandleSearch = debounce(handleSearch, 200);
 
-  app.$watch('search', function (val, oldVal) {
+  app.$watch("search", function (val, oldVal) {
     window.localStorage && window.localStorage.setItem(localSearchKey, val);
     debounceHandleSearch(val);
   });
@@ -196,28 +198,28 @@ function init() {
   const query = new AV.Query("TestObject");
   query.limit(1000);
   query.find().then((TestObject) => {
-    let data = TestObject.map(item => item.attributes);
+    let data = TestObject.map((item) => item.attributes);
 
-    data.forEach(em => {
+    data.forEach((em) => {
       em.isShow = true;
     });
 
-    app.$set('items', data);
+    app.$set("items", data);
 
-      // 搜索历史记录
-      let searchWording =
+    // 搜索历史记录
+    let searchWording =
       (window.localStorage && window.localStorage.getItem(localSearchKey)) ||
-      '';
-    app.$set('search', searchWording);
-    searchWording !== '' && handleSearch(searchWording);
-  })
+      "";
+    app.$set("search", searchWording);
+    searchWording !== "" && handleSearch(searchWording);
+  });
 
   // 隐藏
-  document.querySelector('#container').onclick = e => {
+  document.querySelector("#container").onclick = (e) => {
     if (app.isShow) {
-      app.$set('isShow', false);
+      app.$set("isShow", false);
       setTimeout(() => {
-        app.$set('isCtnShow', false);
+        app.$set("isCtnShow", false);
       }, 300);
     }
   };
@@ -227,52 +229,67 @@ function init() {
   if (window.localStorage) {
     localTag = window.localStorage.getItem(localTagKey);
   }
-  let isTagOn = 'false';
+  let isTagOn = "false";
   if (localTag === null) {
     isTagOn =
-      window.yiliaConfig && window.yiliaConfig.showTags ? 'true' : 'false';
+      window.yiliaConfig && window.yiliaConfig.showTags ? "true" : "false";
   } else {
     isTagOn =
       (window.localStorage && window.localStorage.getItem(localTagKey)) ||
-      'false';
+      "false";
   }
-  app.$set('showTags', JSON.parse(isTagOn));
+  app.$set("showTags", JSON.parse(isTagOn));
 
   // 其他标签点击
   // 标签
-  let $tags = document.querySelectorAll('.tagcloud a.js-tag');
+  let $tags = document.querySelectorAll(".tagcloud a.js-tag");
   for (var i = 0, len = $tags.length; i < len; i++) {
     let $em = $tags[i];
-    $em.setAttribute('href', 'javascript:void(0)');
-    $em.onclick = e => {
+    $em.setAttribute("href", "javascript:void(0)");
+    $em.onclick = (e) => {
       e.stopPropagation();
-      app.$set('innerArchive', true);
-      app.$set('friends', false);
-      app.$set('aboutme', false);
-      app.$set('isShow', true);
-      app.$set('isCtnShow', true);
-      app.$set('search', '#' + $em.innerHTML);
+      app.$set("innerArchive", true);
+      app.$set("friends", false);
+      app.$set("aboutme", false);
+      app.$set("isShow", true);
+      app.$set("isCtnShow", true);
+      app.$set("search", "#" + $em.innerHTML);
       setScrollZero();
       return false;
     };
   }
 }
 
-// 防止DOMContentLoaded时间加载完成，还未执行init
-if (document.querySelector('#container')) {
-  init();
-  if (!isMobile) {
-    Anm.init();
-  }
-}
+// // 防止DOMContentLoaded时间加载完成，还未执行init
+// if (document.querySelector("#container")) {
+//   init();
+//   if (!isMobile) {
+//     Anm.init();
+//   }
+// }
 
-// 等待dom生成
-document.addEventListener('DOMContentLoaded',function(){
-  init();
-  if (!isMobile) {
-    Anm.init();
-  }
+// // 等待dom生成
+// document.addEventListener("DOMContentLoaded", function () {
+//   init();
+//   if (!isMobile) {
+//     Anm.init();
+//   }
+// });
+
+AV.init({
+  appId: "3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz",
+  appKey: "fstd3ABXC89jc5VDSe6ANGV6",
+  serverURLs: {
+    push: "https://leancloud.cn",
+    stats: "https://leancloud.cn",
+    engine: "https://leancloud.cn",
+    api: "https://leancloud.cn",
+  },
 });
 
+init();
+if (!isMobile) {
+  Anm.init();
+}
 
 module.exports = {};
