@@ -13,7 +13,7 @@ subNav:
   gitee: "https://gitee.com/luckyship" # 码云
   # jianshu: "#" #简书
   # cnblog: "#"
-  #blog: "#"
+  blog: "https://juejin.cn/user/730534951787662"
   #csdn: "#"
   #rss: "#"
   #zhihu: "#"
@@ -137,7 +137,7 @@ giteement:
     client_secret: ''       #client secret
 
 #6、Valine https://valine.js.org
-valine: 
+valine:
   appid: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz'  #Leancloud应用的appId
   appkey: 'fstd3ABXC89jc5VDSe6ANGV6'  #Leancloud应用的appKey
   verify: false #验证码
