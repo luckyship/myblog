@@ -7,8 +7,6 @@ import Q from "./Q";
 // 神特么safari不支持fetch
 import * as promise from "es6-promise";
 import * as fetch from "fetch-ie8";
-const AV = require("leancloud-storage");
-console.log(AV)
 
 window.Promise = window.Promise || promise.Promise;
 window.fetch = window.fetch || fetch;
@@ -260,36 +258,20 @@ function init() {
   }
 }
 
-// // 防止DOMContentLoaded时间加载完成，还未执行init
-// if (document.querySelector("#container")) {
-//   init();
-//   if (!isMobile) {
-//     Anm.init();
-//   }
-// }
-
-// // 等待dom生成
-// document.addEventListener("DOMContentLoaded", function () {
-//   init();
-//   if (!isMobile) {
-//     Anm.init();
-//   }
-// });
-
-AV.init({
-  appId: "3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz",
-  appKey: "fstd3ABXC89jc5VDSe6ANGV6",
-  serverURLs: {
-    push: "https://leancloud.cn",
-    stats: "https://leancloud.cn",
-    engine: "https://leancloud.cn",
-    api: "https://leancloud.cn",
-  },
-});
-
-init();
-if (!isMobile) {
-  Anm.init();
+// 防止DOMContentLoaded时间加载完成，还未执行init
+if (document.querySelector("#container")) {
+  init();
+  if (!isMobile) {
+    Anm.init();
+  }
 }
+
+// 等待dom生成
+document.addEventListener("DOMContentLoaded", function () {
+  init();
+  if (!isMobile) {
+    Anm.init();
+  }
+});
 
 module.exports = {};

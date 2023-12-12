@@ -19,6 +19,20 @@
   %>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <script src="/js/av-min.js"></script>
+
+  <script>
+    AV.init({
+      appId: '<%= theme.valine.appid %>',
+      appKey: '<%= theme.valine.appkey %>',
+      serverURLs: {
+        push: "https://leancloud.cn",
+        stats: "https://leancloud.cn",
+        engine: "https://leancloud.cn",
+        api: "https://leancloud.cn",
+      },
+    });
+  </script>
   <%- partial('script') %>
 
   <link rel="dns-prefetch" href="<%= config.url %>">
